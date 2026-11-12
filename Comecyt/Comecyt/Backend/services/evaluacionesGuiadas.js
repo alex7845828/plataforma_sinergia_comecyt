@@ -23,8 +23,11 @@ export function modulosVistaPrevia(user) {
   const correo = process.env.MODULOS_VISTA_PREVIA_CORREO || process.env.MODULO_7_VISTA_PREVIA_CORREO;
   if (process.env.NODE_ENV === "production" || !correo || user?.correo !== correo ||
       (user.rol !== "alumno" && user.role !== "alumno")) return [];
-  const ids = (process.env.MODULOS_VISTA_PREVIA_IDS || "7").split(",").map(Number);
-  return catalogo.map(modulo => modulo.id).filter(id => ids.includes(id));
+  const seleccion = process.env.MODULOS_VISTA_PREVIA_IDS || "7";
+  const idsCatalogo = catalogo.map(modulo => modulo.id);
+  if (seleccion.trim() === "todos") return idsCatalogo;
+  const ids = seleccion.split(",").map(Number);
+  return idsCatalogo.filter(id => ids.includes(id));
 }
 
 export function calificar(evaluacion, respuestas) {

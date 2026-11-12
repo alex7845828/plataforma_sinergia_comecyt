@@ -4,6 +4,8 @@ La aplicación usa React con Vite, Node.js con Express y MySQL.
 
 ## Desarrollo local
 
+Para trabajar desde otra PC, clona el [repositorio de la plataforma](https://github.com/alex7845828/plataforma_sinergia_comecyt) y abre en VS Code la carpeta que contiene este README y el `package.json` raíz. Selecciona la rama donde estén publicados estos cambios.
+
 Los comandos de la raíz usan las siguientes carpetas.
 
 | Componente | Carpeta |
@@ -12,7 +14,7 @@ Los comandos de la raíz usan las siguientes carpetas.
 | API MySQL | `Comecyt/Backend` |
 | Catálogo del curso | `Comecyt/RedesSociales/Comecyt/RedesSociales/src/curso/catalogo.json` |
 
-El repositorio conserva el frontend exterior `Comecyt/RedesSociales/src` y el backend PostgreSQL `Comecyt/RedesSociales/Comecyt/Backend` como referencias de la estructura anterior. Usa los comandos de la raíz para arrancar la combinación React + MySQL.
+Los comandos de la raíz arrancan la combinación React + MySQL. También puedes ejecutar `npm run dev` desde `Comecyt/RedesSociales`, que delega el arranque al frontend de la tabla.
 
 1. Instala las dependencias con Node.js 22 en cada paquete.
 
@@ -21,8 +23,8 @@ El repositorio conserva el frontend exterior `Comecyt/RedesSociales/src` y el ba
    npm.cmd --prefix Comecyt/RedesSociales/Comecyt/RedesSociales ci
    ```
 
-2. Configura `Comecyt/Backend/.env` con los valores de tu instancia MySQL y un `JWT_SECRET`. Los dos paquetes incluyen ejemplos de configuración. Define `VITE_API_URL` en el frontend si la API usa una URL distinta de `http://localhost:4000`.
-3. En una **base nueva**, importa `bd_comecyt_schema.sql` para crear las tablas. El volcado incluye instrucciones `DROP TABLE`. En una **base existente**, revisa directamente el catálogo con el siguiente comando.
+2. En el clon nuevo, copia `Comecyt/Backend/.env.example` a `Comecyt/Backend/.env`. Configura los datos de tu instancia MySQL y un `JWT_SECRET` propio. Define `VITE_API_URL` en el frontend si la API usa una URL distinta de `http://localhost:4000`.
+3. Para una instalación nueva, crea en MySQL la base indicada en `DB_NAME` e importa `bd_comecyt_schema.sql` en ella. El volcado incluye instrucciones `DROP TABLE`. Si ya tienes una base con usuarios o progreso, pasa al siguiente paso. Para conservar los usuarios y el avance de otra PC, restaura un respaldo de esa base.
 4. Revisa los IDs y sincroniza el catálogo en la base de destino.
 
    ```powershell
@@ -32,14 +34,16 @@ El repositorio conserva el frontend exterior `Comecyt/RedesSociales/src` y el ba
 
    La revisión consulta MySQL sin persistir cambios. La sincronización agrega los registros faltantes y unifica los títulos y los totales de lecciones dentro de una transacción. Si encuentra IDs ocupados por otros módulos, evaluaciones con una relación distinta o numeración de lecciones incompatible, cancela la operación. Los IDs de módulos, resultados y certificados históricos se conservan.
 
-5. En dos terminales, inicia la API y el frontend.
+5. Desde la raíz del repositorio, inicia la API en una terminal de VS Code y el frontend en otra.
 
    ```powershell
    npm.cmd run dev:api
    npm.cmd run dev:web
    ```
 
-   Para compilar el frontend, ejecuta `npm.cmd run build:web`.
+   El frontend abre [la pantalla de inicio de sesión](http://localhost:5173/login). Si el puerto `5173` está ocupado, libera ese puerto antes de volver a ejecutar el comando. Para compilar el frontend, ejecuta `npm.cmd run build:web`.
+
+6. Si usas una base nueva, registra a Pedro como alumno en [la pantalla de registro](http://localhost:5173/registro) con el correo `pedro@comecyt.test` y una contraseña para esa instalación. Con la configuración de vista previa del archivo de ejemplo, su cuenta puede recorrer todos los cursos en desarrollo.
 
 ## Orden del curso
 

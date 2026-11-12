@@ -9,6 +9,12 @@ const __dirname = path.dirname(__filename)
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    host: 'localhost',
+    port: 5173,
+    strictPort: true,
+    open: '/login',
+  },
   resolve: {
     dedupe: ['react', 'react-dom'], // 👈 Evita duplicar React
     alias: {
