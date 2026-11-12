@@ -4,7 +4,7 @@ La aplicación usa React con Vite, Node.js con Express y MySQL.
 
 ## Desarrollo local
 
-Para trabajar desde otra PC, clona el [repositorio de la plataforma](https://github.com/alex7845828/plataforma_sinergia_comecyt) y abre en VS Code la carpeta que contiene este README y el `package.json` raíz. Selecciona la rama donde estén publicados estos cambios.
+Para trabajar desde otra PC, actualiza la rama `main` del [repositorio de la plataforma](https://github.com/alex7845828/plataforma_sinergia_comecyt) con `git pull --ff-only` y abre en VS Code la carpeta `Comecyt` del clon, donde están este README y el `package.json` que contiene `dev:api` y `dev:web`.
 
 Los comandos de la raíz usan las siguientes carpetas.
 
@@ -43,7 +43,14 @@ Los comandos de la raíz arrancan la combinación React + MySQL. También puedes
 
    El frontend abre [la pantalla de inicio de sesión](http://localhost:5173/login). Si el puerto `5173` está ocupado, libera ese puerto antes de volver a ejecutar el comando. Para compilar el frontend, ejecuta `npm.cmd run build:web`.
 
-6. Si usas una base nueva, registra a Pedro como alumno en [la pantalla de registro](http://localhost:5173/registro) con el correo `pedro@comecyt.test` y una contraseña para esa instalación. Con la configuración de vista previa del archivo de ejemplo, su cuenta puede recorrer todos los cursos en desarrollo.
+6. Para conservar la cuenta existente de Pedro, conecta la API a la misma instancia MySQL o restaura un respaldo de esa base en la otra PC. Si elegiste una base vacía, registra a Pedro como alumno en [la pantalla de registro](http://localhost:5173/registro) con el correo `pedro@comecyt.test`.
+
+   Para que Pedro pueda abrir todas las lecciones, agrega estas variables a `Comecyt/Backend/.env` si el archivo ya existía y reinicia la API. El archivo de ejemplo ya las incluye. La vista previa funciona en desarrollo y permite recorrer el catálogo sin registrar avances.
+
+   ```dotenv
+   MODULOS_VISTA_PREVIA_CORREO=pedro@comecyt.test
+   MODULOS_VISTA_PREVIA_IDS=todos
+   ```
 
 ## Orden del curso
 
