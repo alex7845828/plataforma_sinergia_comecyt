@@ -56,7 +56,7 @@ export async function consultarProgreso(req, res) {
     total_contenidos: total,
     porcentaje_general: calcularPorcentaje(contenidosCompletados.length, total)
   };
-  return res.json({ modulos, contenidosCompletados, estadisticas, modulos_vista_previa: modulosVistaPrevia(req.user) });
+  return res.json({ modulos, contenidosCompletados, estadisticas, modulos_vista_previa: modulosVistaPrevia(req) });
 }
 
 async function cargarAvance(db, correo, moduloId, total) {
@@ -83,7 +83,7 @@ export async function obtenerLeccion(req, res) {
     return res.status(409).json({ error: MENSAJE_CONFLICTO });
   }
 
-  const vista_previa = modulosVistaPrevia(req.user).includes(leccion.modulo_id);
+  const vista_previa = modulosVistaPrevia(req).includes(leccion.modulo_id);
   if (!vista_previa && leccion.numero > 1) {
     const completadas = await cargarAvance(pool, correo, leccion.modulo_id, leccion.total_contenidos);
     if (!completadas.has(leccion.numero) && !completadas.has(leccion.numero - 1)) {
@@ -123,7 +123,7 @@ export async function guardarAvance(req, res) {
     }
 
     const completadas = await cargarAvance(db, correo, moduloId, modulo.total_contenidos);
-    if (modulosVistaPrevia(req.user).includes(moduloId)) {
+    if (modulosVistaPrevia(req).includes(moduloId)) {
       return res.json({
         success: true,
         progreso_actual: completadas.size,

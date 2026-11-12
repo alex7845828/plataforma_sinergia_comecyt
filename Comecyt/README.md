@@ -43,14 +43,9 @@ Los comandos de la raíz arrancan la combinación React + MySQL. También puedes
 
    El frontend abre [la pantalla de inicio de sesión](http://localhost:5173/login). Si el puerto `5173` está ocupado, libera ese puerto antes de volver a ejecutar el comando. Para compilar el frontend, ejecuta `npm.cmd run build:web`.
 
-6. Para conservar la cuenta existente de Pedro, conecta la API a la misma instancia MySQL o restaura un respaldo de esa base en la otra PC. Si elegiste una base vacía, registra a Pedro como alumno en [la pantalla de registro](http://localhost:5173/registro) con el correo `pedro@comecyt.test`.
+6. Para revisar los cursos, inicia sesión como **alumno** con Pedro o con una cuenta creada desde [la pantalla de registro](http://localhost:5173/registro). Con el frontend y la API en la misma PC, usa `http://localhost:4000` para la API y un entorno distinto de producción. En esa configuración, cada cuenta de alumno puede abrir todas las lecciones desde el temario en modo de vista previa, sin registrar avances.
 
-   Para que Pedro pueda abrir todas las lecciones, agrega estas variables a `Comecyt/Backend/.env` si el archivo ya existía y reinicia la API. El archivo de ejemplo ya las incluye. La vista previa funciona en desarrollo y permite recorrer el catálogo sin registrar avances.
-
-   ```dotenv
-   MODULOS_VISTA_PREVIA_CORREO=pedro@comecyt.test
-   MODULOS_VISTA_PREVIA_IDS=todos
-   ```
+   Para conservar la cuenta y el avance de Pedro al cambiar de PC, conecta la API a la misma instancia MySQL o restaura un respaldo de la base.
 
 ## Orden del curso
 

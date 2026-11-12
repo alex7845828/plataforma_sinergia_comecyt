@@ -194,7 +194,7 @@ export const guardarResultadoEvaluacion = async (req, res) => {
       return res.status(400).json({ error: "Puntaje fuera de rango" });
     }
     const aprobado = puntaje * 100 / evaluacion.puntaje >= MIN_PORCENTAJE_APROBADO;
-    if (modulosVistaPrevia(req.user).includes(evaluacion.modulo_id)) {
+    if (modulosVistaPrevia(req).includes(evaluacion.modulo_id)) {
       return res.json({ mensaje: "Resultado de vista previa", intentos: 1, max_puntaje: puntaje, aprobado });
     }
 
@@ -240,7 +240,7 @@ export const reiniciarEvaluacionModulo = async (req, res) => {
       "SELECT evaluacion_id, modulo_id FROM EVALUACION WHERE evaluacion_id = ? AND modulo_id NOT IN (?)", [evaluacion_id, modulosEvaluadosEnServidor]
     );
     if (!evaluacion) return res.status(404).json({ error: "Evaluación no encontrada" });
-    if (modulosVistaPrevia(req.user).includes(evaluacion.modulo_id)) {
+    if (modulosVistaPrevia(req).includes(evaluacion.modulo_id)) {
       return res.json({ message: "Vista previa reiniciada" });
     }
     await pool.query("DELETE FROM RESULTADO WHERE alumno_id =? AND evaluacion_id =?", [alumno[0].alumno_id, evaluacion_id]);

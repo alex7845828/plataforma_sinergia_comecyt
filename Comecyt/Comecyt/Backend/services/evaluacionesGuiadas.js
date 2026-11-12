@@ -19,12 +19,22 @@ export function evaluacionGuiada(moduloId) {
   return evaluaciones.get(moduloId);
 }
 
-export function modulosVistaPrevia(user) {
-  const correo = process.env.MODULOS_VISTA_PREVIA_CORREO || process.env.MODULO_7_VISTA_PREVIA_CORREO;
-  if (process.env.NODE_ENV === "production" || !correo || user?.correo !== correo ||
+const direccionesLocales = new Set(["127.0.0.1", "::1", "::ffff:127.0.0.1"]);
+const hostsLocales = new Set(["localhost", "127.0.0.1", "[::1]"]);
+
+export function modulosVistaPrevia(req) {
+  const { user } = req;
+  if (process.env.NODE_ENV === "production" || !user?.correo ||
       (user.rol !== "alumno" && user.role !== "alumno")) return [];
-  const seleccion = process.env.MODULOS_VISTA_PREVIA_IDS || "7";
+
   const idsCatalogo = catalogo.map(modulo => modulo.id);
+  if (direccionesLocales.has(req.socket.remoteAddress) && hostsLocales.has(req.hostname)) {
+    return idsCatalogo;
+  }
+
+  const correo = process.env.MODULOS_VISTA_PREVIA_CORREO || process.env.MODULO_7_VISTA_PREVIA_CORREO;
+  if (user.correo !== correo) return [];
+  const seleccion = process.env.MODULOS_VISTA_PREVIA_IDS || "7";
   if (seleccion.trim() === "todos") return idsCatalogo;
   const ids = seleccion.split(",").map(Number);
   return idsCatalogo.filter(id => ids.includes(id));
