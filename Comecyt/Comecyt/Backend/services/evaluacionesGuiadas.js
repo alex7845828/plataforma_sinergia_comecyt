@@ -24,12 +24,12 @@ const hostsLocales = new Set(["localhost", "127.0.0.1", "[::1]"]);
 
 export function modulosVistaPrevia(req) {
   const { user } = req;
-  if (process.env.NODE_ENV === "production" || !user?.correo ||
+  if (process.env.NODE_ENV === "production" || process.env.MODULOS_VISTA_PREVIA_ACTIVA === "false" || !user?.correo ||
       (user.rol !== "alumno" && user.role !== "alumno")) return [];
 
   const idsCatalogo = catalogo.map(modulo => modulo.id);
   if (direccionesLocales.has(req.socket.remoteAddress) && hostsLocales.has(req.hostname)) {
-    return idsCatalogo;
+    return req.get("X-Agora-Vista-Previa") === "1" ? idsCatalogo : [];
   }
 
   const correo = process.env.MODULOS_VISTA_PREVIA_CORREO || process.env.MODULO_7_VISTA_PREVIA_CORREO;

@@ -43,9 +43,15 @@ Los comandos de la raíz arrancan la combinación React + MySQL. También puedes
 
    El frontend abre [la pantalla de inicio de sesión](http://localhost:5173/login). Si el puerto `5173` está ocupado, libera ese puerto antes de volver a ejecutar el comando. Para compilar el frontend, ejecuta `npm.cmd run build:web`.
 
-6. Para revisar los cursos, inicia sesión como **alumno** con Pedro o con una cuenta creada desde [la pantalla de registro](http://localhost:5173/registro). Con el frontend y la API en la misma PC, usa `http://localhost:4000` para la API y un entorno distinto de producción. En esa configuración, cada cuenta de alumno puede abrir todas las lecciones desde el temario en modo de vista previa, sin registrar avances.
+6. Inicia sesión como **alumno** con Pedro o con una cuenta creada desde [la pantalla de registro](http://localhost:5173/registro). En localhost, el modo de acreditación guarda avances por defecto. Para abrir cualquier lección en una sesión de práctica, selecciona **Explorar en vista previa** desde Inicio.
 
    Para conservar la cuenta y el avance de Pedro al cambiar de PC, conecta la API a la misma instancia MySQL o restaura un respaldo de la base.
+
+## Constancias por módulo
+
+Puedes empezar cualquier módulo desde el inicio o el temario. Al completar sus lecciones y aprobar la evaluación correspondiente, descarga su constancia en **Inicio** o en **Mi perfil → Constancias por módulo**. Retos Educaplay se acredita al completar sus retos y la lección de cierre.
+
+Ejecuta `npm.cmd run catalogo:aplicar` para instalar la evaluación de Cobros Digitales y Finanzas en MySQL. Si estás explorando en vista previa, selecciona **Volver al modo de acreditación** en Inicio para guardar el avance y obtener constancias.
 
 ## Orden del curso
 

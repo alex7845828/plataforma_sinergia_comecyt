@@ -8,6 +8,7 @@ const api = axios.create({ baseURL: API_URL });
 api.interceptors.request.use(config => {
     const token = localStorage.getItem("token");
     if (token) config.headers.Authorization = `Bearer ${token}`;
+    if (sessionStorage.getItem("agora-vista-previa") === "1") config.headers["X-Agora-Vista-Previa"] = "1";
     return config;
 });
 

@@ -35,6 +35,7 @@ axios.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
+    if (sessionStorage.getItem("agora-vista-previa") === "1") config.headers["X-Agora-Vista-Previa"] = "1"
     return config
   },
   (error) => {

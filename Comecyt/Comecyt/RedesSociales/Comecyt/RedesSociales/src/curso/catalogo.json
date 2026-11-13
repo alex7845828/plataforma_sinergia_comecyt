@@ -219,7 +219,7 @@
         "archivo": "modulo_5_contenido_15.jsx"
       },
       {
-        "nombre": "Cierre del curso",
+        "nombre": "Cierre de Retos Educaplay",
         "archivo": "modulo_5_contenido_16.jsx"
       }
     ]
@@ -252,8 +252,9 @@
       },
       {
         "nombre": "Examen de Cobros Digitales",
-        "archivo": "modulo_6_contenido_6_Eval.jsx",
-        "evaluacion": true
+        "archivo": "evaluacionGuiada.jsx",
+        "evaluacion": true,
+        "puntajeMaximo": 100
       }
     ]
   },

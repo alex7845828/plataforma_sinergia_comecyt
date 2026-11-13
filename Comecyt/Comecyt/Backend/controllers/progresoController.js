@@ -1,7 +1,8 @@
 import { pool } from "../config/database.js";
 import { normalizarAvance } from "../services/avance.js";
-import { idEnConflicto } from "../services/catalogo.js";
-import { MINIMO_APROBACION, evaluacionGuiada, buscarEvaluacionGuiada, mejorPuntaje, modulosVistaPrevia } from "../services/evaluacionesGuiadas.js";
+import { modulosAprobados } from "../services/acreditacion.js";
+import { catalogo, idEnConflicto } from "../services/catalogo.js";
+import { modulosVistaPrevia } from "../services/evaluacionesGuiadas.js";
 
 const MENSAJE_CONFLICTO = "El catálogo de MySQL requiere revisión antes de continuar.";
 
@@ -26,6 +27,8 @@ export async function consultarProgreso(req, res) {
   const [registros] = await pool.query(
     "SELECT modulo_id, contenido_id FROM contenidos_completados WHERE correo = ?", [correo]
   );
+  const [[alumno]] = await pool.query("SELECT alumno_id FROM ALUMNO WHERE correo = ?", [correo]);
+  const aprobados = alumno ? await modulosAprobados(pool, alumno.alumno_id) : new Set();
 
   const contenidosCompletados = [];
   const modulos = catalogo.map(({ progreso_guardado, ...modulo }) => {
@@ -43,6 +46,7 @@ export async function consultarProgreso(req, res) {
     return {
       ...modulo,
       progreso_actual,
+      constancia_disponible: progreso_actual === modulo.total_contenidos && aprobados.has(modulo.modulo_id),
       porcentaje: calcularPorcentaje(progreso_actual, modulo.total_contenidos),
       siguiente_numero: siguiente_numero <= modulo.total_contenidos ? siguiente_numero : null
     };
@@ -59,7 +63,7 @@ export async function consultarProgreso(req, res) {
   return res.json({ modulos, contenidosCompletados, estadisticas, modulos_vista_previa: modulosVistaPrevia(req) });
 }
 
-async function cargarAvance(db, correo, moduloId, total) {
+export async function cargarAvance(db, correo, moduloId, total) {
   const [registros] = await db.query(
     "SELECT contenido_id FROM contenidos_completados WHERE correo = ? AND modulo_id = ?", [correo, moduloId]
   );
@@ -135,13 +139,9 @@ export async function guardarAvance(req, res) {
       return res.status(403).json({ error: "Completa la lección anterior primero" });
     }
 
-    const examen = evaluacionGuiada(moduloId);
-    if (examen?.numero === numero) {
-      const evaluacionId = await buscarEvaluacionGuiada(db, examen);
-      const puntaje = evaluacionId ? await mejorPuntaje(db, alumno.alumno_id, evaluacionId) : null;
-      if (puntaje === null || puntaje < MINIMO_APROBACION) {
-        return res.status(403).json({ error: "Aprueba la evaluación final primero." });
-      }
+    const leccionCatalogo = catalogo.find(item => item.id === moduloId)?.lecciones[numero - 1];
+    if (leccionCatalogo?.evaluacion && !(await modulosAprobados(db, alumno.alumno_id)).has(moduloId)) {
+      return res.status(403).json({ error: "Aprueba la evaluación final primero." });
     }
 
     completadas.add(numero);
