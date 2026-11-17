@@ -23,7 +23,7 @@ Los comandos de la raíz arrancan la combinación React + MySQL. También puedes
    npm.cmd --prefix Comecyt/RedesSociales/Comecyt/RedesSociales ci
    ```
 
-2. En el clon nuevo, copia `Comecyt/Backend/.env.example` a `Comecyt/Backend/.env`. Configura los datos de tu instancia MySQL y un `JWT_SECRET` propio. Define `VITE_API_URL` en el frontend si la API usa una URL distinta de `http://localhost:4000`.
+2. En el clon nuevo, copia `Comecyt/Backend/.env.example` a `Comecyt/Backend/.env`. Configura los datos de tu instancia MySQL y un `JWT_SECRET` propio. Vite redirige las solicitudes a la API local. En producción, sirve `/api`, `/avatars` y `/certificados` desde el mismo origen del frontend o configura `VITE_API_URL` con el origen público de la API antes de compilar.
 3. Para una instalación nueva, crea en MySQL la base indicada en `DB_NAME` e importa `bd_comecyt_schema.sql` en ella. El volcado incluye instrucciones `DROP TABLE`. Si ya tienes una base con usuarios o progreso, pasa al siguiente paso. Para conservar los usuarios y el avance de otra PC, restaura un respaldo de esa base.
 4. Revisa los IDs y sincroniza el catálogo en la base de destino.
 
@@ -41,7 +41,9 @@ Los comandos de la raíz arrancan la combinación React + MySQL. También puedes
    npm.cmd run dev:web
    ```
 
-   El frontend abre [la pantalla de inicio de sesión](http://localhost:5173/login). Si el puerto `5173` está ocupado, libera ese puerto antes de volver a ejecutar el comando. Para compilar el frontend, ejecuta `npm.cmd run build:web`.
+   El frontend abre [la pantalla de inicio de sesión](http://localhost:5173/login). Si el puerto `5173` está ocupado, Vite usa el siguiente puerto libre. Consulta la dirección `Local` que aparece en la terminal. Para compilar el frontend, ejecuta `npm.cmd run build:web`.
+
+   Para probar desde un teléfono en la misma red, inicia el frontend con `npm.cmd --prefix Comecyt/RedesSociales/Comecyt/RedesSociales run dev -- --host 0.0.0.0` y abre `http://IP-DE-TU-PC:5173/login` en el teléfono. Si Vite eligió otro puerto, usa el que muestra la terminal.
 
 6. Inicia sesión como **alumno** con Pedro o con una cuenta creada desde [la pantalla de registro](http://localhost:5173/registro). En localhost, el modo de acreditación guarda avances por defecto. Para abrir cualquier lección en una sesión de práctica, selecciona **Explorar en vista previa** desde Inicio.
 

@@ -1,8 +1,10 @@
 import PDFDocument from "pdfkit";
 import { fileURLToPath } from "node:url";
 
-const logoTecnm = fileURLToPath(new URL("../assets/logo-tecnm.jpg", import.meta.url));
-const logoTessfp = fileURLToPath(new URL("../assets/logo-tessfp.png", import.meta.url));
+const logoTecnm = fileURLToPath(new URL("../assets/logo-tecnm-transparente.png", import.meta.url));
+const logoTessfp = fileURLToPath(new URL("../assets/logo-tessfp-transparente.png", import.meta.url));
+export const VERSION_CONSTANCIA = "v2";
+
 const verde = "#143D32";
 const verdeClaro = "#D8EDB4";
 const tinta = "#253B32";

@@ -9,11 +9,11 @@ import { verifyAlumno, verifyToken } from "../middleware/auth.js";
 import { cargarAvance } from "../controllers/progresoController.js";
 import { catalogo, idEnConflicto } from "../services/catalogo.js";
 import { modulosAprobados } from "../services/acreditacion.js";
-import { crearConstancia } from "../services/constanciaPdf.js";
+import { crearConstancia, VERSION_CONSTANCIA } from "../services/constanciaPdf.js";
 
 const router = express.Router();
 const directorio = fileURLToPath(new URL("../Certificados/", import.meta.url));
-const archivoNuevo = /^Constancia_AGORA_M\d+_[a-f0-9-]{36}\.pdf$/;
+const archivoAgora = /^Constancia_AGORA_M\d+_(?:v\d+_)?[a-f0-9-]{36}\.pdf$/;
 
 router.post("/generar", verifyToken, verifyAlumno, async (req, res) => {
   const moduloId = Number(req.body?.modulo_id);
@@ -48,7 +48,9 @@ router.post("/generar", verifyToken, verifyAlumno, async (req, res) => {
       });
     }
 
-    if (!archivoNuevo.test(archivo)) {
+    if (archivoAgora.test(archivo)) {
+      if (!archivo.startsWith(`Constancia_AGORA_M${moduloId}_${VERSION_CONSTANCIA}_`)) pdf = null;
+    } else {
       const avance = await cargarAvance(db, req.user.correo, moduloId, modulo.total_contenidos);
       const aprobados = await modulosAprobados(db, alumno.alumno_id);
       if (avance.size === modulo.total_contenidos && aprobados.has(moduloId)) {
@@ -66,7 +68,7 @@ router.post("/generar", verifyToken, verifyAlumno, async (req, res) => {
       const contenido = buffer(doc);
       doc.end();
       pdf = await contenido;
-      archivo = `Constancia_AGORA_M${moduloId}_${randomUUID()}.pdf`;
+      archivo = `Constancia_AGORA_M${moduloId}_${VERSION_CONSTANCIA}_${randomUUID()}.pdf`;
       archivoCreado = path.join(directorio, archivo);
       await writeFile(archivoCreado, pdf, { flag: "wx" });
       await db.query(`

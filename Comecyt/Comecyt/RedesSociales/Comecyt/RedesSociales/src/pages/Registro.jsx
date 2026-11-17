@@ -4,7 +4,7 @@ import { ArrowRight, CircleAlert } from "lucide-react";
 import CampoClave from "../Components/common/CampoClave";
 import MarcoAcceso from "../Components/common/MarcoAcceso";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+const API_URL = import.meta.env.VITE_API_URL || "";
 const perfiles = new Map([
   ["alumno", "alumno"], ["docente", "docente"], ["admin", "administrador"]
 ]);

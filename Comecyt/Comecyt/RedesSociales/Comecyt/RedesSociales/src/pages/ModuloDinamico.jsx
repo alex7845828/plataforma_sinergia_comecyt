@@ -69,7 +69,7 @@ function Leccion({ modulo, tema }) {
             <Toaster position="top-center" />
             {acceso.vistaPrevia && <p role="status" style={{ textAlign: "center" }}>Vista previa · El avance y los intentos de esta sesión no se guardan.</p>}
             <Suspense fallback={<div>Cargando lección...</div>}>
-                <Componente onComplete={manejarRetoCompletado} navigate={navigate} moduloId={moduloId} numContenido={numContenido} tituloModulo={modulo.titulo} vistaPrevia={acceso.vistaPrevia} />
+                <Componente onComplete={manejarRetoCompletado} navigate={navigate} moduloId={moduloId} numContenido={numContenido} numeroModulo={modulo.numero} tituloModulo={modulo.titulo} vistaPrevia={acceso.vistaPrevia} />
             </Suspense>
             {esUltimaLeccion && temaCompletado && !acceso.vistaPrevia && (
                 <div style={{ display: "grid", justifyContent: "center", marginTop: 24 }}>

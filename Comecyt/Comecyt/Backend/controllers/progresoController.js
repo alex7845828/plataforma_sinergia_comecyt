@@ -14,14 +14,13 @@ export async function consultarProgreso(req, res) {
   const { correo } = req.user;
   if (!correo) return res.status(403).json({ error: "La sesión no tiene correo" });
 
-  const [catalogo] = await pool.query(`
+  const [modulosDb] = await pool.query(`
     SELECT m.modulo_id, m.titulo, m.descripcion, m.total_contenidos,
            COALESCE(p.progreso_actual, 0) AS progreso_guardado
     FROM MODULO m
     LEFT JOIN progreso_modulos p ON p.modulo_id = m.modulo_id AND p.correo = ?
-    ORDER BY m.modulo_id
   `, [correo]);
-  if (catalogo.some(modulo => idEnConflicto(modulo.modulo_id, modulo.titulo))) {
+  if (modulosDb.some(modulo => idEnConflicto(modulo.modulo_id, modulo.titulo))) {
     return res.status(409).json({ error: MENSAJE_CONFLICTO });
   }
   const [registros] = await pool.query(
@@ -31,7 +30,9 @@ export async function consultarProgreso(req, res) {
   const aprobados = alumno ? await modulosAprobados(pool, alumno.alumno_id) : new Set();
 
   const contenidosCompletados = [];
-  const modulos = catalogo.map(({ progreso_guardado, ...modulo }) => {
+  const orden = new Map(catalogo.map(({ id }, index) => [id, index]));
+  modulosDb.sort((a, b) => (orden.get(a.modulo_id) ?? Infinity) - (orden.get(b.modulo_id) ?? Infinity) || a.modulo_id - b.modulo_id);
+  const modulos = modulosDb.map(({ progreso_guardado, ...modulo }) => {
     const lecciones = normalizarAvance(
       registros.filter(registro => registro.modulo_id === modulo.modulo_id).map(registro => registro.contenido_id),
       progreso_guardado,

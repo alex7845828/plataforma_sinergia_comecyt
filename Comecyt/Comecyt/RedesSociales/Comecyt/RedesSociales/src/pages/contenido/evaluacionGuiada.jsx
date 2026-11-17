@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import "../../Css/LeccionesGuiadas.css";
 
-export default function EvaluacionGuiada({ moduloId, tituloModulo, onComplete, vistaPrevia }) {
+export default function EvaluacionGuiada({ moduloId, numeroModulo, tituloModulo, onComplete, vistaPrevia }) {
   const endpoint = `/api/alumno/modulo/${moduloId}/evaluacion`;
   const { api } = useAuth();
   const [examen, setExamen] = useState(null);
@@ -52,7 +52,7 @@ export default function EvaluacionGuiada({ moduloId, tituloModulo, onComplete, v
   return (
     <article className="leccion-guiada">
       <header className="leccion-guiada__cabecera">
-        <p>Módulo {moduloId} · {tituloModulo}</p>
+        <p>Módulo {numeroModulo} · {tituloModulo}</p>
         <h1>Evaluación final</h1>
       </header>
 

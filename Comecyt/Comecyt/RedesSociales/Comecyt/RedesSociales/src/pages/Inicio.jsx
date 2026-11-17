@@ -68,12 +68,12 @@ export default function Inicio() {
         <section aria-labelledby="titulo-modulos">
           <div className="panel-alumno__seccion"><h2 id="titulo-modulos">Mis módulos</h2><Link to="/contenidos">Ver temario <ArrowRight size={16} aria-hidden="true" /></Link></div>
           <div className="panel-alumno__modulos">
-            {modulos.map((modulo, i) => {
-              const icono = iconos[i] || BookOpen;
+            {modulos.map(modulo => {
+              const icono = iconos[modulo.id - 1] || BookOpen;
               const completo = modulo.cantidad === modulo.fin;
               return (
                 <article className="panel-alumno__tarjeta panel-alumno__modulo" key={modulo.id}>
-                  <div className="panel-alumno__fila"><span className="panel-alumno__icono">{createElement(icono, { size: 22, "aria-hidden": true })}</span><span className="panel-alumno__nota">Módulo {modulo.id}</span></div>
+                  <div className="panel-alumno__fila"><span className="panel-alumno__icono">{createElement(icono, { size: 22, "aria-hidden": true })}</span><span className="panel-alumno__nota">Módulo {modulo.numero}</span></div>
                   <h3>{modulo.nombre}</h3><p>{modulo.descripcion}</p>
                   <div className="panel-alumno__avance"><span>{modulo.cantidad} de {modulo.fin} contenidos</span><progress max={modulo.fin} value={modulo.cantidad} aria-label={`Avance en ${modulo.nombre}`} /></div>
                   <Link className="panel-alumno__boton" to={ruta(modulo)}>{completo ? "Repasar" : modulo.cantidad ? "Continuar" : "Empezar"} {completo ? <CheckCircle2 size={17} aria-hidden="true" /> : <ArrowRight size={17} aria-hidden="true" />}</Link>
