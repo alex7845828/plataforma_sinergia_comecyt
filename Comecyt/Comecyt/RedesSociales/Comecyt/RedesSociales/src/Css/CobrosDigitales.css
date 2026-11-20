@@ -1,0 +1,18 @@
+.cobros-foto { margin: 0; }
+.cobros-foto img { width: 100%; height: 280px; object-fit: cover; border-radius: 12px; display: block; }
+.cobros-foto figcaption { font-size: .85rem; line-height: 1.5; color: #536271; margin-top: 10px; }
+.cobros-foto a { color: #1755a1; }
+.cobros-campos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 16px; margin: 20px 0; }
+.cobros-campo { display: grid; gap: 8px; font-weight: 600; }
+.cobros-campo input, .cobros-campo select { width: 100%; box-sizing: border-box; border: 1px solid #9aaba0; border-radius: 8px; padding: 12px; color: #233447; background: white; font: inherit; }
+.cobros-practica button { border: 0; border-radius: 9px; background: #246528; color: white; padding: 12px 18px; margin: 12px 0; cursor: pointer; font: inherit; font-weight: 600; }
+.cobros-practica button:disabled { background: #e3e9e4; color: #536158; cursor: not-allowed; }
+.cobros-practica :is(input, select, button):focus-visible { outline: 3px solid #1755a1; outline-offset: 3px; }
+.cobros-resultado { background: #edf6ef; border-left: 4px solid #2e7d32; border-radius: 8px; padding: 16px; margin-top: 16px; }
+.cobros-nota { color: #536271; font-size: .9rem; padding-bottom: 14px; }
+.cobros-opcion, .cobros-aportaciones label { display: flex; align-items: baseline; gap: 12px; padding: 12px 4px; cursor: pointer; }
+.cobros-practica fieldset { border: 1px solid #dbe5df; border-radius: 10px; margin: 16px 0; min-width: 0; }
+.cobros-practica input[type=checkbox] { accent-color: #246528; flex-shrink: 0; }
+.leccion-guiada__cabecera .cobros-subtitulo { color: inherit; font-size: 1.2rem; margin: 12px 0; }
+.leccion-guiada > .apoyo-aprendizaje { margin-bottom: 0; }
+@media (max-width: 600px) { .cobros-foto img { height: 220px; } }

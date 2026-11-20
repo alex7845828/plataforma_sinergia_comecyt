@@ -1,0 +1,7 @@
+import { leccionesNuevas } from './leccionesNuevas';
+import { videosRepaso } from './apoyosAprendizaje';
+const fotos = {8:['7651822','Kindel Media','people-working-together-on-the-laptop'],9:['9301295','Mikhail Nilov','colleagues-using-a-laptop-in-the-office'],10:['5835267','Tim Samuel','interior-of-modern-taxi-car-while-passenger-paying-for-ride'],11:['5186356','Nataliya Vaitkevich','people-working-on-a-desk']};
+export const nuevosRecursos = Object.fromEntries(Object.entries(leccionesNuevas).map(([id, lecciones]) => [id, lecciones.map(l => {
+ const [archivo,autor,slug]=fotos[id];
+ return { objetivos:[l.intro,'Resolver una situación práctica y justificar la decisión.','Revisar el resultado antes de usarlo en una situación real.'], imagen:{archivo,carpeta:'nuevos',autor,fuente:'https://www.pexels.com/photo/'+slug+'-'+archivo+'/',alt:id==='10'?'Pasajero realizando el pago de un viaje':'Personas trabajando con herramientas digitales',pie:'Fotografía ilustrativa. No representa la interfaz de la aplicación.'},video:{...videosRepaso[id],antes:'Relaciona este video de repaso del módulo con: '+l.titulo,durante:'Identifica una recomendación aplicable al caso de esta lección y explica cómo la usarías.'},ejemplo:[l.bloques[l.bloques.length-1][0],...l.bloques[l.bloques.length-1].slice(1),'Aplica la recomendación a un caso propio con datos ficticios.'],fuente:l.recursos?.[0] || ['Material audiovisual del módulo','https://www.youtube.com/watch?v='+videosRepaso[id].id] };
+})]));

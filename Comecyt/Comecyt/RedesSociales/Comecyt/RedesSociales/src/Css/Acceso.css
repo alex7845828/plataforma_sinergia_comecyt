@@ -107,3 +107,58 @@
   .acceso-agora__perfil { padding-inline: 10px; gap: 9px; }
   .acceso-agora__icono { width: 36px; height: 36px; }
 }
+
+/* El arte es decorativo: títulos, perfiles y formularios siguen siendo HTML. */
+.acceso-agora {
+  grid-template-columns:minmax(0,1fr) minmax(360px,34%);
+  gap:clamp(24px,3vw,56px);
+  padding:clamp(24px,3.4vw,64px);
+  background-color:#003f38;
+  background-image:linear-gradient(90deg,#002e2bd9 0%,#002e2b9c 23%,transparent 43%),url('/images/acceso/agora-fondo-3d.png');
+  background-size:cover;
+  background-position:center;
+  box-sizing:border-box;
+}
+.acceso-agora__marca { background:none; padding:0; overflow:visible; gap:36px; min-height:680px; }
+.acceso-agora__marca::after { content:none; }
+.acceso-agora__firma strong { font-size:1.9rem; }
+.acceso-agora__firma small { font-size:.85rem; letter-spacing:.24em; }
+.acceso-agora__simbolo { background:#c9f7b2; width:52px; height:52px; }
+.acceso-agora__presentacion { max-width:min(47%,450px); }
+.acceso-agora__etiqueta { display:inline-flex; gap:9px; align-items:center; border:1px solid #45bc9980; border-radius:30px; padding:9px 13px; font-size:clamp(.7rem,1vw,.95rem); color:#eafff4; background:#003c36a6; }
+.acceso-agora__etiqueta svg { flex-shrink:0; }
+.acceso-agora__presentacion h1 { font-size:clamp(2rem,3.6vw,4.2rem); margin:30px 0 0; line-height:1.08; text-shadow:0 2px 14px #00251f66; }
+.acceso-agora__presentacion h1 span { color:#bbf7a2; }
+.acceso-agora__presentacion h1::after { content:""; display:block; width:58px; height:6px; margin-top:24px; border-radius:8px; background:#bef132; }
+.acceso-agora__presentacion p { font-size:clamp(.95rem,1.15vw,1.15rem); }
+.acceso-agora__beneficios { display:flex; justify-content:space-between; gap:12px; margin-top:30px; }
+.acceso-agora__beneficios span { display:grid; justify-items:center; gap:9px; text-align:center; font-size:.73rem; color:#f0fff6; }
+.acceso-agora__beneficios svg { box-sizing:content-box; width:27px; height:27px; padding:14px; background:#126353b3; border-radius:22px; color:#c8f6c3; }
+.acceso-agora__temas span { border-color:#55bca1; background:#003d35b3; border-radius:20px; }
+.acceso-agora__panel { padding:0; align-self:center; }
+.acceso-agora__contenido { box-sizing:border-box; width:100%; max-width:560px; padding:clamp(25px,2.6vw,48px); border:1px solid #e9fff5; border-radius:30px; background:linear-gradient(145deg,#fffffffc,#f1fbf7f5); box-shadow:0 24px 70px #00292345; }
+.acceso-agora__contenido h2 { margin-top:0; }
+.acceso-agora__contenido h2::after { content:""; display:block; width:52px; height:6px; border-radius:5px; background:#86d936; margin-top:16px; }
+.acceso-agora__perfil { box-shadow:0 2px 3px #183b2810; min-height:78px; }
+.acceso-agora__icono { background:#dcf6e9; }
+@media(min-width:1800px) { .acceso-agora { padding-inline:max(64px,calc((100vw - 1750px)/2)); } }
+@media(max-width:1100px) {
+  .acceso-agora { grid-template-columns:minmax(0,1fr) minmax(330px,40%); background-position:46% center; }
+  .acceso-agora__presentacion { max-width:72%; }
+  .acceso-agora__presentacion h1 { font-size:clamp(2rem,4vw,3rem); }
+  .acceso-agora__beneficios { gap:6px; }
+}
+@media(max-width:740px) {
+  .acceso-agora { grid-template-columns:minmax(0,1fr); gap:26px; padding:24px 20px; background-size:auto 700px; background-position:49% top; background-repeat:no-repeat; }
+  .acceso-agora__marca { min-height:370px; gap:22px; padding:0; }
+  .acceso-agora__firma strong { font-size:1.45rem; }
+  .acceso-agora__presentacion { max-width:55%; margin-top:5px; margin-bottom:auto; }
+  .acceso-agora__presentacion h1 { font-size:clamp(1.55rem,5.5vw,2.6rem); margin-top:15px; }
+  .acceso-agora__presentacion h1::after { margin-top:16px; height:4px; width:40px; }
+  .acceso-agora__etiqueta { font-size:.65rem; padding:6px 8px; gap:5px; border-radius:12px; }
+  .acceso-agora__etiqueta svg { width:17px; }
+  .acceso-agora__beneficios { display:none; }
+  .acceso-agora__panel { padding:0; width:100%; max-width:520px; justify-self:center; }
+  .acceso-agora__contenido { padding:26px 22px; border-radius:24px; }
+}
+@media(prefers-reduced-motion:reduce) { .acceso-agora { background-attachment:scroll; } }

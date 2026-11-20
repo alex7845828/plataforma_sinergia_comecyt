@@ -1,10 +1,11 @@
 import { lazy, Suspense, useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, Navigate, useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useGuardarProgreso } from "../hooks/useGuardarProgreso";
 import { MODULOS } from "../curso/catalogo";
 import { Toaster } from "react-hot-toast";
 import DescargarConstancia from "../Components/common/DescargarConstancia";
+import ApoyoAprendizaje from "../Components/ApoyoAprendizaje";
 
 const archivos = import.meta.glob("./contenido/*.jsx");
 const archivosDelCurso = new Set(MODULOS.flatMap(modulo => modulo.temas.map(tema => tema.archivo)));
@@ -12,6 +13,7 @@ const componentes = Object.fromEntries([...archivosDelCurso].map(archivo => [arc
 
 export default function ModuloDinamico() {
     const { id, contenidoId } = useParams();
+    if (Number(id) === 7 && Number(contenidoId) === 7) return <Navigate to="/modulo/7/contenido/6" replace />;
     const modulo = MODULOS.find(item => item.id === Number(id));
     const tema = modulo?.temas[Number(contenidoId ?? 1) - 1];
 
@@ -68,6 +70,7 @@ function Leccion({ modulo, tema }) {
         <div className="modulo-dinamico-wrapper" style={{ paddingBottom: '40px' }}>
             <Toaster position="top-center" />
             {acceso.vistaPrevia && <p role="status" style={{ textAlign: "center" }}>Vista previa · El avance y los intentos de esta sesión no se guardan.</p>}
+            {moduloId === 5 && <ApoyoAprendizaje moduloId={moduloId} numContenido={numContenido} evaluacion={tema.evaluacion === true} />}
             <Suspense fallback={<div>Cargando lección...</div>}>
                 <Componente onComplete={manejarRetoCompletado} navigate={navigate} moduloId={moduloId} numContenido={numContenido} numeroModulo={modulo.numero} tituloModulo={modulo.titulo} vistaPrevia={acceso.vistaPrevia} />
             </Suspense>

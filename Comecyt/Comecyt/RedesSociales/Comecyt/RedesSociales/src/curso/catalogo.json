@@ -209,11 +209,7 @@
         "archivo": "leccionGuiada.jsx"
       },
       {
-        "nombre": "Seguridad en dispositivos y redes",
-        "archivo": "leccionGuiada.jsx"
-      },
-      {
-        "nombre": "Respuesta ante incidentes digitales",
+        "nombre": "Dispositivos, redes y respuesta ante incidentes",
         "archivo": "leccionGuiada.jsx"
       },
       {
@@ -243,6 +239,14 @@
         "archivo": "leccionGuiada.jsx"
       },
       {
+        "nombre": "Historial de versiones y recuperación",
+        "archivo": "leccionGuiada.jsx"
+      },
+      {
+        "nombre": "Proyecto colaborativo y cierre de permisos",
+        "archivo": "leccionGuiada.jsx"
+      },
+      {
         "nombre": "Evaluación final · Google Drive y trabajo colaborativo",
         "archivo": "evaluacionGuiada.jsx",
         "evaluacion": true,
@@ -266,6 +270,14 @@
       },
       {
         "nombre": "Búsqueda de empleo y postulaciones",
+        "archivo": "leccionGuiada.jsx"
+      },
+      {
+        "nombre": "Publicaciones profesionales y portafolio",
+        "archivo": "leccionGuiada.jsx"
+      },
+      {
+        "nombre": "Seguimiento de postulaciones y entrevistas",
         "archivo": "leccionGuiada.jsx"
       },
       {
@@ -295,6 +307,14 @@
         "archivo": "leccionGuiada.jsx"
       },
       {
+        "nombre": "Costos, recibos y aclaraciones",
+        "archivo": "leccionGuiada.jsx"
+      },
+      {
+        "nombre": "Planifica viajes y entregas responsables",
+        "archivo": "leccionGuiada.jsx"
+      },
+      {
         "nombre": "Evaluación final · Aplicaciones de transporte y entrega",
         "archivo": "evaluacionGuiada.jsx",
         "evaluacion": true,
@@ -318,6 +338,14 @@
       },
       {
         "nombre": "Verificación de respuestas y privacidad",
+        "archivo": "leccionGuiada.jsx"
+      },
+      {
+        "nombre": "Resúmenes y borradores verificables",
+        "archivo": "leccionGuiada.jsx"
+      },
+      {
+        "nombre": "Proyecto práctico con ChatGPT y Gemini",
         "archivo": "leccionGuiada.jsx"
       },
       {

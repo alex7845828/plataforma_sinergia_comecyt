@@ -1,4 +1,4 @@
-import { BookOpen, FolderOpen, LockKeyhole } from "lucide-react";
+import { BookOpen, FolderOpen, LockKeyhole, GraduationCap, Laptop, ChartNoAxesColumn, Award } from "lucide-react";
 import "../../Css/Acceso.css";
 
 export default function MarcoAcceso({ tituloId, children }) {
@@ -10,8 +10,14 @@ export default function MarcoAcceso({ tituloId, children }) {
           <span><strong>ÁGORA</strong><small>COMECYT</small></span>
         </div>
         <div className="acceso-agora__presentacion">
-          <h1>Habilidades digitales para la vida diaria</h1>
+          <span className="acceso-agora__etiqueta"><GraduationCap size={22} aria-hidden="true" /> Plataforma de aprendizaje digital</span>
+          <h1>Habilidades digitales para la <span>vida diaria</span></h1>
           <p>Aprende a colaborar, comunicarte y usar herramientas digitales con confianza.</p>
+          <div className="acceso-agora__beneficios" aria-label="Características de la plataforma">
+            <span><Laptop aria-hidden="true" />Cursos prácticos</span>
+            <span><ChartNoAxesColumn aria-hidden="true" />Actividades</span>
+            <span><Award aria-hidden="true" />Certificados</span>
+          </div>
         </div>
         <div className="acceso-agora__temas" aria-label="Temas de aprendizaje">
           <span><FolderOpen aria-hidden="true" size={18} /> Colaboración</span>

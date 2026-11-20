@@ -220,3 +220,10 @@ export const practicasGuiadas = {
     }
   ]
 };
+
+// Integra prevención técnica y respuesta en la quinta lección.
+const [dispositivos, incidentes] = practicasGuiadas[7].slice(4);
+practicasGuiadas[7].splice(4, 2, { titulo: "Protege tus dispositivos y prepara la respuesta", pasos: [...dispositivos.pasos, ...incidentes.pasos], actividad: `${dispositivos.actividad} ${incidentes.actividad}` });
+
+import { ampliacionModulos } from "./ampliacionModulos";
+for (const [id, lecciones] of Object.entries(ampliacionModulos)) practicasGuiadas[id].push(...lecciones.map(l => ({titulo: "Aplica lo aprendido", pasos: l.bloques.map(b => b[1]), actividad: l.caso.pregunta})));

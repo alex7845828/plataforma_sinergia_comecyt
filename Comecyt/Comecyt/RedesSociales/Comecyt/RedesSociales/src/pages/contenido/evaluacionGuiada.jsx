@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import ApoyoAprendizaje from "../../Components/ApoyoAprendizaje";
 import "../../Css/LeccionesGuiadas.css";
 
 export default function EvaluacionGuiada({ moduloId, numeroModulo, tituloModulo, onComplete, vistaPrevia }) {
@@ -53,14 +54,18 @@ export default function EvaluacionGuiada({ moduloId, numeroModulo, tituloModulo,
     <article className="leccion-guiada">
       <header className="leccion-guiada__cabecera">
         <p>Módulo {numeroModulo} · {tituloModulo}</p>
-        <h1>Evaluación final</h1>
+        <h1>{moduloId >= 6 ? tituloModulo : 'Evaluación final'}</h1>
+        {moduloId >= 6 && <h2>Evaluación final · 15 preguntas</h2>}
       </header>
+
+      {moduloId >= 6 && <ApoyoAprendizaje moduloId={moduloId} evaluacion mostrarVideo={false} />}
 
       <div className="leccion-guiada__contenido">
         <section className="leccion-guiada__tarjeta">
           <h2>Instrucciones</h2>
           <div className="leccion-guiada__cuerpo">
             {examen && <p>Contesta los {examen.preguntas.length} reactivos. Necesitas {examen.minimo} de 100 puntos para aprobar.</p>}
+            {moduloId >= 6 && examen?.preguntas.length === 15 && <p>Son tres preguntas por cada lección. Todos los reactivos tienen el mismo valor; con 12 respuestas correctas alcanzas 80 puntos. Contesta todas antes de enviar.</p>}
             {error && <p className="leccion-guiada__feedback leccion-guiada__feedback--revisar" role="alert">{error}</p>}
             {!examen && !error && <p role="status">Cargando evaluación…</p>}
           </div>

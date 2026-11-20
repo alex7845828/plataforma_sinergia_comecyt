@@ -444,3 +444,6 @@ export const leccionesNuevas = {
     }
   ]
 };
+
+import { ampliacionModulos } from "./ampliacionModulos";
+for (const id of Object.keys(ampliacionModulos)) leccionesNuevas[id].push(...ampliacionModulos[id]);

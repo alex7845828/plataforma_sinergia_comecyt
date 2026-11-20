@@ -1,3 +1,5 @@
+import { nuevosRecursos } from "../../curso/nuevosRecursos";
+import { CuestionarioRepaso } from "../../Components/ApoyoAprendizaje";
 import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { imagenLeccion } from "../../curso/imagenesLecciones";
@@ -5,6 +7,11 @@ import { leccionesCobrosDigitales } from "../../curso/cobrosDigitales";
 import { leccionesNuevas } from "../../curso/leccionesNuevas";
 import { practicasGuiadas } from "../../curso/practicasGuiadas";
 import { leccionesSeguridadDigital } from "../../curso/seguridadDigital";
+import { seguridadRecursos } from "../../curso/seguridadRecursos";
+import PracticaSeguridad from "../../Components/PracticaSeguridad";
+import { cobrosRecursos } from "../../curso/cobrosRecursos";
+import ApoyoAprendizaje, { VideoInteractivo } from "../../Components/ApoyoAprendizaje";
+import PracticaCobros from "../../Components/PracticaCobros";
 import "../../Css/LeccionesGuiadas.css";
 
 const leccionesPorModulo = { 6: leccionesCobrosDigitales, 7: leccionesSeguridadDigital, ...leccionesNuevas };
@@ -14,6 +21,7 @@ export default function LeccionGuiada({ moduloId, numContenido, numeroModulo, ti
   const { titulo, intro, bloques, ejemplo, video, recursos, caso } = lecciones[numContenido - 1];
   const practica = practicasGuiadas[moduloId][numContenido - 1];
   const imagen = imagenLeccion(moduloId, numContenido);
+  const apoyo = moduloId === 6 ? cobrosRecursos[numContenido - 1] : moduloId === 7 ? seguridadRecursos[numContenido - 1] : nuevosRecursos[moduloId]?.[numContenido - 1];
   const [respuesta, setRespuesta] = useState(null);
   const [revisada, setRevisada] = useState(false);
   const [guardando, setGuardando] = useState(false);
@@ -33,13 +41,15 @@ export default function LeccionGuiada({ moduloId, numContenido, numeroModulo, ti
     <article className="leccion-guiada">
       <header className="leccion-guiada__cabecera">
         <p>Módulo {numeroModulo} · {tituloModulo} · Lección {numContenido} de {lecciones.length}</p>
-        <h1>{titulo}</h1>
+        <h1>{apoyo ? tituloModulo : titulo}</h1>
+        {apoyo && <h2 className="cobros-subtitulo">{titulo}</h2>}
         <p className="leccion-guiada__intro">{intro}</p>
       </header>
 
       <div className="leccion-guiada__contenido">
+        {apoyo && <section className="leccion-guiada__tarjeta"><h2>Objetivos de esta lección</h2><div className="leccion-guiada__cuerpo"><ul>{apoyo.objetivos.map(objetivo => <li key={objetivo}>{objetivo}</li>)}</ul></div></section>}
         {bloques.map(([nombre, ...parrafos], indice) => {
-          const tieneApoyo = indice === 0 && (imagen || ejemplo);
+          const tieneApoyo = indice === 0 && (apoyo || imagen || ejemplo);
           return (
             <section className="leccion-guiada__tarjeta" key={nombre}>
               <h2>
@@ -48,11 +58,18 @@ export default function LeccionGuiada({ moduloId, numContenido, numeroModulo, ti
               </h2>
               <div className={`leccion-guiada__cuerpo${tieneApoyo ? " leccion-guiada__columnas" : ""}`}>
                 <div>{parrafos.map(parrafo => <p key={parrafo}>{parrafo}</p>)}</div>
-                {tieneApoyo && (imagen ? <FiguraLeccion imagen={imagen} /> : <EjemploLeccion ejemplo={ejemplo} />)}
+                {tieneApoyo && (apoyo ? <FotoLeccion imagen={apoyo.imagen} carpeta={moduloId === 7 ? "seguridad" : "cobros"} /> : imagen ? <FiguraLeccion imagen={imagen} /> : <EjemploLeccion ejemplo={ejemplo} />)}
               </div>
             </section>
           );
         })}
+
+        {apoyo && <section className="leccion-guiada__tarjeta"><h2>Ejemplo resuelto · {apoyo.ejemplo[0]}</h2><div className="leccion-guiada__cuerpo"><ol className="leccion-guiada__pasos">{apoyo.ejemplo.slice(1).map(paso => <li key={paso}>{paso}</li>)}</ol>{ejemplo && <EjemploLeccion ejemplo={ejemplo} />}</div></section>}
+
+        {apoyo && <VideoInteractivo video={{ ...apoyo.video, ...caso }} />}
+        {moduloId === 6 && <PracticaCobros numero={numContenido} />}
+        {moduloId === 7 && <PracticaSeguridad numero={numContenido} />}
+        {moduloId >= 8 && <CuestionarioRepaso preguntas={[caso]} titulo="Laboratorio interactivo · Decide y comprueba" />}
 
         <section className="leccion-guiada__tarjeta">
           <h2><span className="leccion-guiada__numero">{numContenido}.{bloques.length + 1}</span>{practica.titulo}</h2>
@@ -61,13 +78,13 @@ export default function LeccionGuiada({ moduloId, numContenido, numeroModulo, ti
           </div>
         </section>
 
-        {video && <VideoLeccion video={video} />}
+        {video && !apoyo && <VideoLeccion video={video} />}
 
-        {recursos?.length > 0 && (
+        {(recursos?.length > 0 || apoyo) && (
           <section className="leccion-guiada__tarjeta">
             <h2>Recursos de consulta</h2>
             <div className="leccion-guiada__cuerpo">
-              <ul>{recursos.map(([nombre, url]) => <li key={url}><a href={url} target="_blank" rel="noreferrer">{nombre}</a></li>)}</ul>
+              <ul>{[...(recursos || []), ...(apoyo ? [apoyo.fuente] : [])].map(([nombre, url]) => <li key={url}><a href={url} target="_blank" rel="noreferrer">{nombre}</a></li>)}</ul>
             </div>
           </section>
         )}
@@ -76,6 +93,8 @@ export default function LeccionGuiada({ moduloId, numContenido, numeroModulo, ti
           <h2><span className="leccion-guiada__numero">{numContenido}.{bloques.length + 2}</span>Actividad práctica</h2>
           <div className="leccion-guiada__cuerpo"><p>{practica.actividad}</p></div>
         </section>
+
+        {apoyo && <ApoyoAprendizaje moduloId={moduloId} numContenido={numContenido} mostrarVideo={false} />}
 
         <section className="leccion-guiada__tarjeta">
           <h2><span className="leccion-guiada__numero">{numContenido}.{bloques.length + 3}</span>Comprueba lo aprendido</h2>
@@ -105,6 +124,10 @@ export default function LeccionGuiada({ moduloId, numContenido, numeroModulo, ti
       </div>
     </article>
   );
+}
+
+function FotoLeccion({ imagen, carpeta = "cobros" }) {
+  return <figure className="cobros-foto"><img src={`/images/${imagen.carpeta || carpeta}/${imagen.archivo}.jpg`} alt={imagen.alt} style={{ objectPosition: imagen.archivo === '5483240' ? 'center 85%' : 'center' }} loading="lazy" decoding="async" width="1000" height="667" /><figcaption>{imagen.pie}<br />Foto: <a href={imagen.fuente} target="_blank" rel="noreferrer">{imagen.autor} / Pexels</a></figcaption></figure>;
 }
 
 function EjemploLeccion({ ejemplo }) {

@@ -57,6 +57,10 @@ Ejecuta `npm.cmd run catalogo:aplicar` para instalar la evaluación de Cobros Di
 
 ## Orden del curso
 
+Seguridad Digital (módulo 6 en pantalla, ID interno 7) reúne dispositivos y respuesta ante incidentes en su quinta lección. El examen ahora está en la posición 6 y tiene 15 preguntas.
+Para actualizar una base que todavía tiene las seis lecciones anteriores, ejecuta desde `Comecyt/Backend` primero `node scripts/reorganizarSeguridad.js` y después `node scripts/reorganizarSeguridad.js --aplicar`.
+La operación conserva resultados y constancias, y guarda el estado anterior en `respaldo_cambios_curso` con clave `seguridad-cinco-lecciones-v1` dentro de la misma transacción. La quinta lección se reconoce completada cuando se habían completado las dos lecciones que integra. Una instalación nueva usa directamente `catalogo:aplicar`.
+
 | ID | Módulo | Lecciones |
 | --- | --- | --- |
 | 1 | Correo Electrónico | 8 |
@@ -65,7 +69,7 @@ Ejecuta `npm.cmd run catalogo:aplicar` para instalar la evaluación de Cobros Di
 | 4 | Instagram | 8 |
 | 5 | Retos Educaplay | 16 |
 | 6 | Cobros Digitales y Finanzas | 6 |
-| 7 | Seguridad digital y prevención de fraudes | 6 lecciones y evaluación final |
+| 7 | Seguridad digital y prevención de fraudes | 5 lecciones y evaluación final de 15 preguntas |
 | 8 | Google Drive y trabajo colaborativo | 3 lecciones y evaluación final |
 | 9 | LinkedIn | 3 lecciones y evaluación final |
 | 10 | Aplicaciones de transporte y entrega | 3 lecciones y evaluación final |

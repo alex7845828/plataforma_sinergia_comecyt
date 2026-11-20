@@ -1,4 +1,4 @@
-export const leccionesSeguridadDigital = [
+const contenidosSeguridadDigital = [
   {
     "titulo": "Fundamentos de seguridad digital",
     "intro": "La seguridad digital reúne prácticas para proteger la información, los dispositivos y las cuentas que usamos al estudiar, comunicarnos, comprar o hacer operaciones bancarias.",
@@ -223,4 +223,16 @@ export const leccionesSeguridadDigital = [
       "explicacion": "Reporta el movimiento al banco cuanto antes. Después protege tus credenciales desde un equipo confiable, guarda la evidencia y vigila los movimientos."
     }
   }
+];
+
+export const leccionesSeguridadDigital = [
+  ...contenidosSeguridadDigital.slice(0, 4),
+  {
+    ...contenidosSeguridadDigital[4],
+    titulo: 'Dispositivos, redes y respuesta ante incidentes',
+    intro: 'Protege tus dispositivos y respaldos, y prepara una respuesta ordenada si detectas un acceso o un movimiento que no reconoces.',
+    bloques: [...contenidosSeguridadDigital[4].bloques, ...contenidosSeguridadDigital[5].bloques],
+    recursos: contenidosSeguridadDigital[5].recursos,
+    caso: contenidosSeguridadDigital[5].caso,
+  },
 ];

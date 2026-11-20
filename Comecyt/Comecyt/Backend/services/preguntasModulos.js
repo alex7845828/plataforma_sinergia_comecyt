@@ -1,21 +1,7 @@
+import { preguntasCobrosDigitales } from './preguntasCobrosDigitales.js';
+
 export const preguntasModulos = {
-  "6": [
-    ["¿Qué ventaja ofrece una tarjeta digital con CVV dinámico?", [
-      "Elimina los límites de retiro.",
-      "Cambia el código de seguridad periódicamente para reducir el riesgo de fraude.",
-      "Aumenta automáticamente el crédito."
-    ], 1],
-    ["¿Cómo confirmas que recibiste una transferencia?", [
-      "Consultas el movimiento directamente en tu aplicación bancaria.",
-      "Pides una captura de pantalla.",
-      "Esperas una llamada del comprador."
-    ], 0],
-    ["¿Qué haces si recibes un correo que pide tu NIP o contraseña bancaria?", [
-      "Respondes con tus datos.",
-      "Abres el enlace para verificar la cuenta.",
-      "Reportas el mensaje y contactas al banco por un canal oficial."
-    ], 2]
-  ],
+  "6": preguntasCobrosDigitales,
   "8": [
     [
       "¿Qué ayuda a encontrar materiales de un proyecto?",
@@ -205,3 +191,6 @@ export const preguntasModulos = {
     ]
   ]
 };
+
+import { preguntasAmpliadas } from './preguntasAmpliadas.js';
+Object.assign(preguntasModulos, preguntasAmpliadas);
